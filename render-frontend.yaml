@@ -1,0 +1,27 @@
+services:
+  # Frontend Service
+  - type: web
+    name: safar-frontend
+    env: static
+    region: frankfurt
+    plan: starter
+    buildCommand: |
+      cd s1-mini-app
+      npm install
+      npm run build
+    staticPublishPath: ./s1-mini-app/dist
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: VITE_API_URL
+        sync: false
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: Content-Security-Policy
+        value: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://safar-backend.onrender.com/api
