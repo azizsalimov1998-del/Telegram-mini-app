@@ -10,7 +10,7 @@ services:
     buildCommand: |
       pip install -r web_admin/requirements.txt
       if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    startCommand: ./start.sh
+    startCommand: cd /opt/render/project/src/web_admin && gunicorn -w 2 -k gthread -t 120 -b 0.0.0.0:$PORT app:app
     autoDeploy: true
     envVars:
       - key: TELEGRAM_BOT_TOKEN
