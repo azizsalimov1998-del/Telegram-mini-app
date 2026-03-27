@@ -1,4 +1,3 @@
-\
 #!/usr/bin/env bash
 set -euo pipefail
 export PYTHONUNBUFFERED=1
@@ -22,7 +21,6 @@ export DB_PATH="${DB_DISK_PATH}"
 export UPLOAD_DIR="/data/uploads"
 export ENVIRONMENT="${ENVIRONMENT:-production}"
 
-python /opt/render/project/src/main.py &
-
+# Запускаем ТОЛЬКО веб-админку с API для Mini App
 cd /opt/render/project/src/web_admin
 exec gunicorn -w 2 -k gthread -t 120 -b 0.0.0.0:$PORT app:app
